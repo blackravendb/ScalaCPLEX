@@ -3,4 +3,6 @@
   */
 trait OPLBase {
 val solver = new Solver
+
+  def dvar(name: String) = new ExpressionScala(name, solver.variable(name))
 }
