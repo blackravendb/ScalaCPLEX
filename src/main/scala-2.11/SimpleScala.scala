@@ -3,4 +3,8 @@
   */
 class SimpleScala extends OPLBase {
 
+  val X = new VariableScala[Double]
+  val Y = new VariableScala[Double]
+
+  val Z = new dvar[Int]
 }

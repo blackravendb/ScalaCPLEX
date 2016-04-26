@@ -1,7 +1,7 @@
 /**
   * Created by Ahmet on 26.04.2016.
   */
-class ExpressionScala(expr : Expression) {
+class ExpressionScala {
   def +(e: ExpressionScala) = new ExpressionScala(expr.sum(e.expr))
   def -(e: ExpressionScala) = new ExpressionScala(expr.diff(e.expr))
   def *(e: ExpressionScala) = new ExpressionScala(expr.prod(e.expr))
