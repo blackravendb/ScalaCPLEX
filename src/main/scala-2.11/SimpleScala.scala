@@ -3,8 +3,10 @@
   */
 class SimpleScala extends OPLBase {
 
-  val X = new VariableScala[Double]
-  val Y = new VariableScala[Double]
+  val X = new dvar[Double]
+  val Y = new dvar[Double]
 
-  val Z = new dvar[Int]
+  solver maximize X + Y
+
+  
 }
