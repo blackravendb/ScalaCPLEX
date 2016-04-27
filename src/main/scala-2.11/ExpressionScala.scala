@@ -4,19 +4,27 @@
 abstract class ExpressionScala extends Expression{
 
   def +(e: ExpressionScala) = new ExpressionScala {
-    override def eval(as: Assignment): Double = this.sum(e).eval(as)
+    val selfExpression: Expression = this.sum(e)
+    override def eval(as: Assignment): Double = selfExpression.eval(as)
+    override def toString = selfExpression.toString
   }
 
   def -(e: ExpressionScala) = new ExpressionScala {
-    override def eval(as: Assignment): Double = this.diff(e).eval(as)
+    val selfExpression: Expression = this.diff(e)
+    override def eval(as: Assignment): Double = selfExpression.eval(as)
+    override def toString = selfExpression.toString
   }
 
   def *(e: ExpressionScala) = new ExpressionScala {
-    override def eval(as: Assignment): Double = this.prod(e).eval(as)
+    val selfExpression: Expression = this.prod(e)
+    override def eval(as: Assignment): Double = selfExpression.eval(as)
+    override def toString = selfExpression.toString
   }
 
   def /(e: ExpressionScala) = new ExpressionScala {
-    override def eval(as: Assignment): Double = this.div(e).eval(as)
+    val selfExpression: Expression = this.div(e)
+    override def eval(as: Assignment): Double = selfExpression.eval(as)
+    override def toString = selfExpression.toString
   }
 
   def ==(e: ExpressionScala) = this.eq(e)
