@@ -15,9 +15,15 @@ constraints {
 		Solver solver = new Solver();
 		Variable x = solver.variable("x");
 		Variable y = solver.variable("y");
+
 		solver.maximize(x.sum(y));
+
+        // 2*x + y + 10 <= 20;
 		solver.add(solver.constant(2).prod(x).sum(y.sum(solver.constant(10))).leq(solver.constant(20)));
+        // x + 3*y >= 10;
 		solver.add(x.sum(solver.constant(3).prod(y)).geq(solver.constant(10)));
+
+
 		Assignment as = new Assignment();
 		as.put("x",0.0);
 		as.put("y",10.0);

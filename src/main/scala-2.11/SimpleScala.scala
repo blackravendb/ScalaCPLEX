@@ -8,5 +8,6 @@ class SimpleScala extends OPLBase {
 
   solver maximize X + Y
 
-  
+  solver add 2 * X + Y + 10 <= 20
+  solver add X + 3 * Y >= 10
 }
