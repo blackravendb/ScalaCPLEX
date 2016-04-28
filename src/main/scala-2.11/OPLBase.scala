@@ -6,6 +6,7 @@ abstract class OPLBase {
   private val solver = new Solver
   protected val constraints = new ConstraintScala
   private val dVars = new mutable.ArrayBuffer[Dvar[AnyVal]]()
+  private val variables = new mutable.ArrayBuffer[ExpressionScala]()
   protected val goal = new GoalScala(solver)
 
   implicit def constant(value: Double): ExpressionScala = {
@@ -46,6 +47,33 @@ abstract class OPLBase {
       var dvar = dvarIterator next()
       as put(dvar.toString, dvar.value)
     }
+
     solver solve(as)
+  }
+
+  def variable(name: String) = {
+    val v = new VariableScala(name)
+    variables += v
+    v
+  }
+
+  def variables(names: Array[String]): ExprListScala = {
+    val list: ExprListScala = new ExprListScala(names.length)
+    var i: Int = 0
+    while (i < names.length) {
+      list.add(variable(names(i)))
+      i += 1
+    }
+    list
+  }
+
+  def constants(values: Array[Double]): ExprListScala = {
+    val list: ExprListScala = new ExprListScala(values.length)
+    var i: Int = 0
+    while (i < values.length) {
+      list.add(constant(values(i)))
+      i += 1
+    }
+    list
   }
 }

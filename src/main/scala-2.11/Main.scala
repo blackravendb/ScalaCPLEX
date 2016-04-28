@@ -17,5 +17,9 @@ object Main {
     simple2.y := 50
 
     simple2 solve
+
+    val oilScala = new OilScala
+
+
   }
 }
