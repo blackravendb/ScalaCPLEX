@@ -9,7 +9,7 @@ class OilScala extends OPLBase{
   //
   val solver: Solver = new Solver
   val run: ExprListScala = variables(processes)
-  solver.minimize(run.sumProd(solver.constants(cost)))
+  goal minimize run.sumProd(constants(cost))
   solver.add(run.sumProd(solver.constants(consumption)).leq(solver.constant(rawMaterial)))
   var q: Int = 0
   while (q < products.length) {
