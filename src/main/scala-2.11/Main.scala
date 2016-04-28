@@ -6,9 +6,6 @@ object Main {
 
     val simpleScala = new  SimpleScala
 
-    simpleScala.X := 4
-    simpleScala.Y := 3.5
 
-    val oilScala = new OilScala
   }
 }

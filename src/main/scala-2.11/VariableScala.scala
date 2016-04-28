@@ -8,8 +8,10 @@ trait Assignable[T] {
   def := (x : T) : Unit = {value = x}
 }
 
-class VariableScala[T] extends ExpressionScala with Assignable[T]  {
+class VariableScala[T](val name: String) extends ExpressionScala with Assignable[T]  {
+  override def eval(as: Assignment): Double = as.get(name)
 }
 
-class dvar[T] extends ExpressionScala with Assignable[T] {
+class DVariableScala[T](val name: String) extends ExpressionScala with Assignable[T] {
+  override def eval(as: Assignment): Double = as.get(name)
 }
