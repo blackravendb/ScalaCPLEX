@@ -1,18 +1,12 @@
+import java.util
 
-object dvarType extends Enumeration {
-  val float, float_+ = Value
-}
+import scala.collection.mutable
 
-class OPLBase extends OPL{
-  val solver = new Solver
-
-
-  /*
-  implicit def constant(value: Double) = new ExpressionScala {
-    override def eval(as: Assignment): Double = solver.constant(value).eval(as)
-    override def toString: String = value.toString
-  }
-  }*/
+abstract class OPLBase {
+  private val solver = new Solver
+  protected val constraints = new ConstraintScala
+  private val dVars = new mutable.ArrayBuffer[Dvar[AnyVal]]()
+  protected val goal = new GoalScala(solver)
 
   implicit def constant(value: Double): ExpressionScala = {
     println("Double " + value)
@@ -22,76 +16,36 @@ class OPLBase extends OPL{
       override def toString: String = value.toString
     }
   }
-/*
-  implicit class constantNumber(value: Int) {
 
-    val constantValue = new ExpressionScala {
+  implicit def constant(value: Int): ExpressionScala = {
+    println("Double " + value)
+    new ExpressionScala {
       override def eval(as: Assignment): Double = solver.constant(value).eval(as)
+
       override def toString: String = value.toString
     }
-
-
-    def plus(e: Any): ExpressionScala = e match {
-      case n:Double => {
-        val that = new ExpressionScala {
-          override def eval(as: Assignment): Double = solver.constant(4).eval(as)
-          override def toString: String = value.toString
-        }
-        constantValue + that
-      }
-      case s: Symbol => {
-        val that = new ExpressionScala {
-          override def eval(as: Assignment): Double = as.get(s.name)
-          override def toString: String = s.name
-        }
-        constantValue + that
-      }
-      case _ => throw new IllegalArgumentException
-    }
-
-    def times(e: Any): ExpressionScala = e match {
-      case n:Double => {
-        val that = new ExpressionScala {
-          override def eval(as: Assignment): Double = solver.constant(4).eval(as)
-          override def toString: String = value.toString
-        }
-        constantValue + that
-      }
-      case n:Int => {
-        val that = new ExpressionScala {
-          override def eval(as: Assignment): Double = solver.constant(4).eval(as)
-          override def toString: String = value.toString
-        }
-        constantValue + that
-      }
-      case s: Symbol => {
-        val that = new ExpressionScala {
-          override def eval(as: Assignment): Double = as.get(s.name)
-          override def toString: String = s.name
-        }
-        constantValue + that
-      }
-      case _ => throw new IllegalArgumentException
-    }
-  }
-*/
-  implicit def variable(symbol: Symbol) = {
-    new ExpressionScala {
-      override def eval(as: Assignment): Double = as.get(symbol.name)
-      override def toString: String = symbol.name
-    }
   }
 
-  def dvar: dvar = new dvar
-
-  class dvar {
-    var typeName: dvarType.Value = dvarType.float
-
-    def float(symbol: Symbol) = {
-      typeName = dvarType.float
-      solver.variable(symbol.name)
-    }
+  def dvar[T <: AnyVal] = {
+    val v = new Dvar[AnyVal]
+    dVars += v
+    v
   }
 
-  override def toString: String = super.toString
+  def solve = {
+    val as = new Assignment
+
+    val constraintIterator = constraints.iterator
+    while(constraintIterator hasNext){
+      var constraint = constraintIterator.next()
+      solver add constraint
+    }
+
+    val dvarIterator = dVars.iterator
+    while (dvarIterator.hasNext) {
+      var dvar = dvarIterator next()
+      as put(dvar.toString, dvar.value)
+    }
+    solver solve(as)
+  }
 }

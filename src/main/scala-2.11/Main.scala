@@ -6,6 +6,16 @@ object Main {
 
     val simpleScala = new  SimpleScala
 
+    simpleScala.x := 10
+    simpleScala.y := 20.1
 
+    simpleScala.solve
+
+    val simple2 = new SimpleScala
+
+    simple2.x := 100
+    simple2.y := 50
+
+    simple2 solve
   }
 }

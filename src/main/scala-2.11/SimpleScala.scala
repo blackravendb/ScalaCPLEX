@@ -1,30 +1,20 @@
-/**
-  * Created by Dennis on 26.04.2016.
-  */
 class SimpleScala extends OPLBase {
 
-  //val X = new dvar[Double]("X")
-  //val Y = new dvar[Double]("Y")
-  // dvar float+ y
-  dvar float 'x
-  dvar float 'y
+  val x = dvar[Double]
+  val y = dvar[Double]
+  val z = dvar[Int]
 
-  // val a = 2 + 2 + 'y
-
-  solver maximize 'x + 'y
+  goal maximize x + y
 
   //val expr:ExpressionScala = 2.0 times 'x plus 'y plus 10.0
   //val a = expr eq 20
   //val b = a.eq(20.0)
   //println(a)
+  constraints add 2.0 ** x ++ y + 10.0 <= 20.0
+  constraints add x * 2 + y + 10 <= 20
 
-  solver add 2.0 ** 'x ++ 'y + 10.0 <= 20.0
-  solver add 'x ++ 3.0 ** 'y >= 10.0
-
-  val as = new Assignment
-  as.put("x", 20.0)
-  as.put("y", 2.0)
-  solver.solve(as)
+  constraints add x ++ 3.0 ** y >= 10.0
+  constraints add x + 3 * y >= 10
 }
 
 /*
