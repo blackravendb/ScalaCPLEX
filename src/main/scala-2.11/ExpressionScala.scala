@@ -1,6 +1,4 @@
-/**
-  * Created by Ahmet on 26.04.2016.
-  */
+
 abstract class ExpressionScala extends Expression {
 
   def +(e: ExpressionScala): ExpressionScala = {

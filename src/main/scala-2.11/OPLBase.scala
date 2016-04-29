@@ -31,7 +31,7 @@ abstract class OPLBase {
     val v = new Dvar[AnyVal]
     dVars += v
     v
-  }
+}
 
   def solve = {
     val as = new Assignment

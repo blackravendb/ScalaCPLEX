@@ -19,6 +19,10 @@ class ExprListScala(capa: Int) extends ExprList(capa) {
     result
   }
 
+  def scalaGet(x: Int) = { // Ugly
+    get(x).asInstanceOf[ExpressionScala]
+  }
+
   def sum(f: ExpressionScala => ExpressionScala): ExpressionScala = {
     return map(f).reduce((x, y) => x + y)
   }
